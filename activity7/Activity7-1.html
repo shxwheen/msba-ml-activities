@@ -102,7 +102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>From Chapter 12 Course Book</p>
-<div id="cell-2" class="cell" data-execution_count="12">
+<div id="cell-2" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-3" class="cell" data-execution_count="13">
+<div id="cell-3" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ames <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/kevindavisross/data301/main/data/AmesHousing.txt"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ames</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -1150,13 +1150,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Set up a pipeline for each of these four models.</p>
 <p>Then, get predictions on the test set for each of your pipelines, and compute the root mean squared error. Which model performed best?</p>
 <p>Note: You should only use the function train_test_split() one time in your code; that is, we should be predicting on the same test set for all four models.</p>
-<div id="cell-5" class="cell" data-execution_count="14">
+<div id="cell-5" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Single train/test split for all models</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> ames.drop(<span class="st">"SalePrice"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ames[<span class="st">"SalePrice"</span>]</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-6" class="cell" data-execution_count="15">
+<div id="cell-6" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 1: Size and rooms only</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ct1 <span class="op">=</span> ColumnTransformer([</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"standardize"</span>, StandardScaler(), [<span class="st">"Gr Liv Area"</span>, <span class="st">"TotRms AbvGrd"</span>])</span>
@@ -1174,11 +1174,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model 1 MSE: </span><span class="sc">{</span>mse1<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model 1 RMSE: </span><span class="sc">{</span>rmse1<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Model 1 MSE: 3327468163.64
-Model 1 RMSE: 57684.21</code></pre>
+<pre><code>Model 1 MSE: 3078491765.33
+Model 1 RMSE: 55484.16</code></pre>
 </div>
 </div>
-<div id="cell-7" class="cell" data-execution_count="16">
+<div id="cell-7" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 2: Size, rooms, and building type</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ct2 <span class="op">=</span> ColumnTransformer([</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"dummify"</span>, OneHotEncoder(sparse_output<span class="op">=</span><span class="va">False</span>), [<span class="st">"Bldg Type"</span>]),</span>
@@ -1197,11 +1197,11 @@ Model 1 RMSE: 57684.21</code></pre>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model 2 MSE: </span><span class="sc">{</span>mse2<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model 2 RMSE: </span><span class="sc">{</span>rmse2<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Model 2 MSE: 3100121179.51
-Model 2 RMSE: 55678.73</code></pre>
+<pre><code>Model 2 MSE: 2889731663.25
+Model 2 RMSE: 53756.22</code></pre>
 </div>
 </div>
-<div id="cell-8" class="cell" data-execution_count="17">
+<div id="cell-8" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 3: Size and building type with interaction</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X_train3 <span class="op">=</span> X_train[[<span class="st">"Gr Liv Area"</span>, <span class="st">"Bldg Type"</span>]]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>X_test3 <span class="op">=</span> X_test[[<span class="st">"Gr Liv Area"</span>, <span class="st">"Bldg Type"</span>]]</span>
@@ -1224,11 +1224,11 @@ Model 2 RMSE: 55678.73</code></pre>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model 3 MSE: </span><span class="sc">{</span>mse3<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model 3 RMSE: </span><span class="sc">{</span>rmse3<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Model 3 MSE: 3012851227.74
-Model 3 RMSE: 54889.45</code></pre>
+<pre><code>Model 3 MSE: 2782103854.17
+Model 3 RMSE: 52745.65</code></pre>
 </div>
 </div>
-<div id="cell-9" class="cell" data-execution_count="18">
+<div id="cell-9" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 4: 5-degree polynomial on size and rooms, plus building type</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ct4 <span class="op">=</span> ColumnTransformer([</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"dummify"</span>, OneHotEncoder(sparse_output<span class="op">=</span><span class="va">False</span>), [<span class="st">"Bldg Type"</span>]),</span>
@@ -1248,11 +1248,11 @@ Model 3 RMSE: 54889.45</code></pre>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model 4 MSE: </span><span class="sc">{</span>mse4<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model 4 RMSE: </span><span class="sc">{</span>rmse4<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Model 4 MSE: 3199162301.03
-Model 4 RMSE: 56561.14</code></pre>
+<pre><code>Model 4 MSE: 3234879322.05
+Model 4 RMSE: 56876.00</code></pre>
 </div>
 </div>
-<div id="cell-10" class="cell" data-execution_count="19">
+<div id="cell-10" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare all models</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Model"</span>: [<span class="st">"Model 1: Size + Rooms"</span>, </span>
@@ -1280,26 +1280,26 @@ Model 4 RMSE: 56561.14</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>Model 3: Size x BldgType interaction</td>
-<td>3.012851e+09</td>
-<td>54889.445504</td>
+<td>2.782104e+09</td>
+<td>52745.652467</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>Model 2: Size + Rooms + BldgType</td>
-<td>3.100121e+09</td>
-<td>55678.731842</td>
+<td>2.889732e+09</td>
+<td>53756.224414</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">3</td>
-<td>Model 4: Poly(5) Size + Poly(5) Rooms + BldgType</td>
-<td>3.199162e+09</td>
-<td>56561.137728</td>
-</tr>
-<tr class="even">
 <td data-quarto-table-cell-role="th">0</td>
 <td>Model 1: Size + Rooms</td>
-<td>3.327468e+09</td>
-<td>57684.210696</td>
+<td>3.078492e+09</td>
+<td>55484.157787</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Model 4: Poly(5) Size + Poly(5) Rooms + BldgType</td>
+<td>3.234879e+09</td>
+<td>56875.999526</td>
 </tr>
 </tbody>
 </table>
@@ -1312,26 +1312,26 @@ Model 4 RMSE: 56561.14</code></pre>
 <section id="exercise-13.3.1-cross-validation-comparison" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-13.3.1-cross-validation-comparison">Exercise 13.3.1: Cross-Validation Comparison</h2>
 <p>Use the <code>cross_val_score()</code> function with the pipelines from Exercise 13.2.5 to find the cross-validated RMSE for each model. Which model do you prefer, and does it agree with your conclusion from earlier?</p>
-<div id="cell-13" class="cell" data-execution_count="24">
+<div id="cell-13" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform 5-fold cross-validation for each model</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 1: Size and rooms only</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>cv_scores1 <span class="op">=</span> cross_val_score(pipeline1, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>cv_rmse1 <span class="op">=</span> np.sqrt(<span class="op">-</span>cv_scores1.mean())</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>cv_scores1 <span class="op">=</span> cross_val_score(pipeline1, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'r2'</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>r_squared_1 <span class="op">=</span> cv_scores1.mean()</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 2: Size, rooms, and building type</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>cv_scores2 <span class="op">=</span> cross_val_score(pipeline2, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>cv_rmse2 <span class="op">=</span> np.sqrt(<span class="op">-</span>cv_scores2.mean())</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>cv_scores2 <span class="op">=</span> cross_val_score(pipeline2, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'r2'</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>r_squared_2 <span class="op">=</span> cv_scores2.mean()</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 3: Size and building type with interaction</span></span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Model 3 uses only specific columns</span></span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>X_model3 <span class="op">=</span> X[[<span class="st">"Gr Liv Area"</span>, <span class="st">"Bldg Type"</span>]]</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>cv_scores3 <span class="op">=</span> cross_val_score(pipeline3, X_model3, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>cv_rmse3 <span class="op">=</span> np.sqrt(<span class="op">-</span>cv_scores3.mean())</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>cv_scores3 <span class="op">=</span> cross_val_score(pipeline3, X_model3, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'r2'</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>r_squared_3 <span class="op">=</span> cv_scores3.mean()</span>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 4: 5-degree polynomial on size and rooms, plus building type</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>cv_scores4 <span class="op">=</span> cross_val_score(pipeline4, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>)</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>cv_rmse4 <span class="op">=</span> np.sqrt(<span class="op">-</span>cv_scores4.mean())</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>cv_scores4 <span class="op">=</span> cross_val_score(pipeline4, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'r2'</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>r_squared_4 <span class="op">=</span> cv_scores4.mean()</span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare cross-validation results</span></span>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>cv_results <span class="op">=</span> pd.DataFrame({</span>
@@ -1339,19 +1339,19 @@ Model 4 RMSE: 56561.14</code></pre>
 <span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Model 2: Size + Rooms + BldgType"</span>, </span>
 <span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Model 3: Size x BldgType interaction"</span>,</span>
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Model 4: Poly(5) Size + Poly(5) Rooms + BldgType"</span>],</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CV RMSE"</span>: [cv_rmse1, cv_rmse2, cv_rmse3, cv_rmse4],</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CV R-Squared"</span>: [r_squared_1, r_squared_2, r_squared_3, r_squared_4],</span>
 <span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Test RMSE"</span>: [rmse1, rmse2, rmse3, rmse4]</span>
 <span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cross-Validation Results:"</span>)</span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_results.sort_values(<span class="st">"CV RMSE"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_results.sort_values(<span class="st">"CV R-Squared"</span>, ascending<span class="op">=</span><span class="va">False</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Cross-Validation Results:
-                                              Model       CV RMSE     Test RMSE
-2              Model 3: Size x BldgType interaction  53583.840600  54889.445504
-1                  Model 2: Size + Rooms + BldgType  54332.255227  55678.731842
-0                             Model 1: Size + Rooms  56001.240238  57684.210696
-3  Model 4: Poly(5) Size + Poly(5) Rooms + BldgType  56368.687251  56561.137728</code></pre>
+                                              Model  CV R-Squared     Test RMSE
+2              Model 3: Size x BldgType interaction      0.544867  52745.652467
+1                  Model 2: Size + Rooms + BldgType      0.532882  53756.224414
+0                             Model 1: Size + Rooms      0.504209  55484.157787
+3  Model 4: Poly(5) Size + Poly(5) Rooms + BldgType      0.497140  56875.999526</code></pre>
 </div>
 </div>
 <p><strong>Answer:</strong></p>
@@ -1380,7 +1380,7 @@ Model 4 RMSE: 56561.14</code></pre>
 <p>Hint: The dictionary of possible values that you make to give to GridSearchCV will have two elements instead of one.</p>
 <p>Q1: Which model performed the best?</p>
 <p>Q2: What downsides do you see of trying all possible model options? How might you go about choosing a smaller number of tuning values to try?</p>
-<div id="cell-18" class="cell" data-execution_count="20">
+<div id="cell-18" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the column transformer and pipeline</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ct <span class="op">=</span> ColumnTransformer([</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"dummify"</span>, OneHotEncoder(sparse_output<span class="op">=</span><span class="va">False</span>), [<span class="st">"Bldg Type"</span>]),</span>
@@ -1399,11 +1399,11 @@ Model 4 RMSE: 56561.14</code></pre>
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"preprocessing__rooms__degree"</span>: np.arange(<span class="dv">1</span>, <span class="dv">11</span>)</span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Use negative MSE as scoring (GridSearchCV maximizes, so we negate)</span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>gscv <span class="op">=</span> GridSearchCV(pipeline, param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"neg_mean_squared_error"</span>)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Use r2 as scoring metric</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>gscv <span class="op">=</span> GridSearchCV(pipeline, param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'r2'</span>)</span>
 <span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>gscv.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<style>#sk-container-id-2 {
+<style>#sk-container-id-3 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
   --sklearn-color-text-muted: #666;
@@ -1434,15 +1434,15 @@ Model 4 RMSE: 56561.14</code></pre>
   }
 }
 
-#sk-container-id-2 {
+#sk-container-id-3 {
   color: var(--sklearn-color-text);
 }
 
-#sk-container-id-2 pre {
+#sk-container-id-3 pre {
   padding: 0;
 }
 
-#sk-container-id-2 input.sk-hidden--visually {
+#sk-container-id-3 input.sk-hidden--visually {
   border: 0;
   clip: rect(1px 1px 1px 1px);
   clip: rect(1px, 1px, 1px, 1px);
@@ -1454,7 +1454,7 @@ Model 4 RMSE: 56561.14</code></pre>
   width: 1px;
 }
 
-#sk-container-id-2 div.sk-dashed-wrapped {
+#sk-container-id-3 div.sk-dashed-wrapped {
   border: 1px dashed var(--sklearn-color-line);
   margin: 0 0.4em 0.5em 0.4em;
   box-sizing: border-box;
@@ -1462,7 +1462,7 @@ Model 4 RMSE: 56561.14</code></pre>
   background-color: var(--sklearn-color-background);
 }
 
-#sk-container-id-2 div.sk-container {
+#sk-container-id-3 div.sk-container {
   /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
      but bootstrap.min.css set `[hidden] { display: none !important; }`
      so we also need the `!important` here to be able to override the
@@ -1472,7 +1472,7 @@ Model 4 RMSE: 56561.14</code></pre>
   position: relative;
 }
 
-#sk-container-id-2 div.sk-text-repr-fallback {
+#sk-container-id-3 div.sk-text-repr-fallback {
   display: none;
 }
 
@@ -1488,14 +1488,14 @@ div.sk-item {
 
 /* Parallel-specific style estimator block */
 
-#sk-container-id-2 div.sk-parallel-item::after {
+#sk-container-id-3 div.sk-parallel-item::after {
   content: "";
   width: 100%;
   border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
   flex-grow: 1;
 }
 
-#sk-container-id-2 div.sk-parallel {
+#sk-container-id-3 div.sk-parallel {
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -1503,28 +1503,28 @@ div.sk-item {
   position: relative;
 }
 
-#sk-container-id-2 div.sk-parallel-item {
+#sk-container-id-3 div.sk-parallel-item {
   display: flex;
   flex-direction: column;
 }
 
-#sk-container-id-2 div.sk-parallel-item:first-child::after {
+#sk-container-id-3 div.sk-parallel-item:first-child::after {
   align-self: flex-end;
   width: 50%;
 }
 
-#sk-container-id-2 div.sk-parallel-item:last-child::after {
+#sk-container-id-3 div.sk-parallel-item:last-child::after {
   align-self: flex-start;
   width: 50%;
 }
 
-#sk-container-id-2 div.sk-parallel-item:only-child::after {
+#sk-container-id-3 div.sk-parallel-item:only-child::after {
   width: 0;
 }
 
 /* Serial-specific style estimator block */
 
-#sk-container-id-2 div.sk-serial {
+#sk-container-id-3 div.sk-serial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1542,14 +1542,14 @@ clickable and can be expanded/collapsed.
 
 /* Pipeline and ColumnTransformer style (default) */
 
-#sk-container-id-2 div.sk-toggleable {
+#sk-container-id-3 div.sk-toggleable {
   /* Default theme specific background. It is overwritten whether we have a
   specific estimator or a Pipeline/ColumnTransformer */
   background-color: var(--sklearn-color-background);
 }
 
 /* Toggleable label */
-#sk-container-id-2 label.sk-toggleable__label {
+#sk-container-id-3 label.sk-toggleable__label {
   cursor: pointer;
   display: flex;
   width: 100%;
@@ -1562,13 +1562,13 @@ clickable and can be expanded/collapsed.
   gap: 0.5em;
 }
 
-#sk-container-id-2 label.sk-toggleable__label .caption {
+#sk-container-id-3 label.sk-toggleable__label .caption {
   font-size: 0.6rem;
   font-weight: lighter;
   color: var(--sklearn-color-text-muted);
 }
 
-#sk-container-id-2 label.sk-toggleable__label-arrow:before {
+#sk-container-id-3 label.sk-toggleable__label-arrow:before {
   /* Arrow on the left of the label */
   content: "▸";
   float: left;
@@ -1576,25 +1576,25 @@ clickable and can be expanded/collapsed.
   color: var(--sklearn-color-icon);
 }
 
-#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
+#sk-container-id-3 label.sk-toggleable__label-arrow:hover:before {
   color: var(--sklearn-color-text);
 }
 
 /* Toggleable content - dropdown */
 
-#sk-container-id-2 div.sk-toggleable__content {
+#sk-container-id-3 div.sk-toggleable__content {
   display: none;
   text-align: left;
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-2 div.sk-toggleable__content.fitted {
+#sk-container-id-3 div.sk-toggleable__content.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-2 div.sk-toggleable__content pre {
+#sk-container-id-3 div.sk-toggleable__content pre {
   margin: 0.2em;
   border-radius: 0.25em;
   color: var(--sklearn-color-text);
@@ -1602,79 +1602,79 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-2 div.sk-toggleable__content.fitted pre {
+#sk-container-id-3 div.sk-toggleable__content.fitted pre {
   /* unfitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+#sk-container-id-3 input.sk-toggleable__control:checked~div.sk-toggleable__content {
   /* Expand drop-down */
   display: block;
   width: 100%;
   overflow: visible;
 }
 
-#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+#sk-container-id-3 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
   content: "▾";
 }
 
 /* Pipeline/ColumnTransformer-specific style */
 
-#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-3 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-3 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator-specific style */
 
 /* Colorize estimator box */
-#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-3 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+#sk-container-id-3 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
-#sk-container-id-2 div.sk-label label.sk-toggleable__label,
-#sk-container-id-2 div.sk-label label {
+#sk-container-id-3 div.sk-label label.sk-toggleable__label,
+#sk-container-id-3 div.sk-label label {
   /* The background is the default theme color */
   color: var(--sklearn-color-text-on-default-background);
 }
 
 /* On hover, darken the color of the background */
-#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
+#sk-container-id-3 div.sk-label:hover label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
 /* Label box, darken color on hover, fitted */
-#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+#sk-container-id-3 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator label */
 
-#sk-container-id-2 div.sk-label label {
+#sk-container-id-3 div.sk-label label {
   font-family: monospace;
   font-weight: bold;
   display: inline-block;
   line-height: 1.2em;
 }
 
-#sk-container-id-2 div.sk-label-container {
+#sk-container-id-3 div.sk-label-container {
   text-align: center;
 }
 
 /* Estimator-specific */
-#sk-container-id-2 div.sk-estimator {
+#sk-container-id-3 div.sk-estimator {
   font-family: monospace;
   border: 1px dotted var(--sklearn-color-border-box);
   border-radius: 0.25em;
@@ -1684,18 +1684,18 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-2 div.sk-estimator.fitted {
+#sk-container-id-3 div.sk-estimator.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
 /* on hover */
-#sk-container-id-2 div.sk-estimator:hover {
+#sk-container-id-3 div.sk-estimator:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-2 div.sk-estimator.fitted:hover {
+#sk-container-id-3 div.sk-estimator.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
@@ -1783,7 +1783,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 /* "?"-specific style due to the `<a>` HTML tag */
 
-#sk-container-id-2 a.estimator_doc_link {
+#sk-container-id-3 a.estimator_doc_link {
   float: right;
   font-size: 1rem;
   line-height: 1em;
@@ -1798,21 +1798,21 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   border: var(--sklearn-color-unfitted-level-1) 1pt solid;
 }
 
-#sk-container-id-2 a.estimator_doc_link.fitted {
+#sk-container-id-3 a.estimator_doc_link.fitted {
   /* fitted */
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
   color: var(--sklearn-color-fitted-level-1);
 }
 
 /* On hover */
-#sk-container-id-2 a.estimator_doc_link:hover {
+#sk-container-id-3 a.estimator_doc_link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
   color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
-#sk-container-id-2 a.estimator_doc_link.fitted:hover {
+#sk-container-id-3 a.estimator_doc_link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
@@ -1880,7 +1880,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     height: 14px;
     cursor: pointer;
 }
-</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=5,
+</style><div id="sk-container-id-3" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=5,
              estimator=Pipeline(steps=[('preprocessing',
                                         ColumnTransformer(transformers=[('dummify',
                                                                          OneHotEncoder(sparse_output=False),
@@ -1899,7 +1899,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                                         LinearRegression())]),
              param_grid={'preprocessing__rooms__degree': array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10]),
                          'preprocessing__size__degree': array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10])},
-             scoring='neg_mean_squared_error')</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox"><label for="sk-estimator-id-11" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GridSearchCV</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.GridSearchCV.html">?<span>Documentation for GridSearchCV</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+             scoring='r2')</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-21" type="checkbox"><label for="sk-estimator-id-21" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GridSearchCV</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.GridSearchCV.html">?<span>Documentation for GridSearchCV</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1919,7 +1919,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <tr class="user-set odd">
 <td><em></em></td>
 <td class="param">scoring&nbsp;</td>
-<td class="value">'neg_mean_squared_error'</td>
+<td class="value">'r2'</td>
 </tr>
 <tr class="default even">
 <td><em></em></td>
@@ -1961,7 +1961,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
             </details>
         </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox"><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>best_estimator_: Pipeline</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___"></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox"><label for="sk-estimator-id-13" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>preprocessing: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocessing: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__">
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-22" type="checkbox"><label for="sk-estimator-id-22" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>best_estimator_: Pipeline</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___"></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-23" type="checkbox"><label for="sk-estimator-id-23" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>preprocessing: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocessing: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -2013,7 +2013,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
             </details>
         </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox"><label for="sk-estimator-id-14" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>dummify</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__dummify__"><pre>['Bldg Type']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox"><label for="sk-estimator-id-15" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__dummify__">
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-24" type="checkbox"><label for="sk-estimator-id-24" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>dummify</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__dummify__"><pre>['Bldg Type']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-25" type="checkbox"><label for="sk-estimator-id-25" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__dummify__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -2065,7 +2065,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
             </details>
         </div>
-    </div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-16" type="checkbox"><label for="sk-estimator-id-16" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>size</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__size__"><pre>['Gr Liv Area']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-17" type="checkbox"><label for="sk-estimator-id-17" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>PolynomialFeatures</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.PolynomialFeatures.html">?<span>Documentation for PolynomialFeatures</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__size__">
+    </div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-26" type="checkbox"><label for="sk-estimator-id-26" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>size</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__size__"><pre>['Gr Liv Area']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-27" type="checkbox"><label for="sk-estimator-id-27" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>PolynomialFeatures</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.PolynomialFeatures.html">?<span>Documentation for PolynomialFeatures</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__size__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -2097,7 +2097,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
             </details>
         </div>
-    </div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-18" type="checkbox"><label for="sk-estimator-id-18" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>rooms</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__rooms__"><pre>['TotRms AbvGrd']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-19" type="checkbox"><label for="sk-estimator-id-19" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>PolynomialFeatures</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.PolynomialFeatures.html">?<span>Documentation for PolynomialFeatures</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__rooms__">
+    </div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-28" type="checkbox"><label for="sk-estimator-id-28" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>rooms</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__rooms__"><pre>['TotRms AbvGrd']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-29" type="checkbox"><label for="sk-estimator-id-29" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>PolynomialFeatures</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.PolynomialFeatures.html">?<span>Documentation for PolynomialFeatures</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___preprocessing__rooms__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -2129,7 +2129,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
             </details>
         </div>
-    </div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-20" type="checkbox"><label for="sk-estimator-id-20" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>LinearRegression</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.linear_model.LinearRegression.html">?<span>Documentation for LinearRegression</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___linear_regression__">
+    </div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-30" type="checkbox"><label for="sk-estimator-id-30" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>LinearRegression</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.linear_model.LinearRegression.html">?<span>Documentation for LinearRegression</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___linear_regression__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -2211,26 +2211,24 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </script>
 </div>
 </div>
-<div id="cell-19" class="cell" data-execution_count="21">
+<div id="cell-19" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find best parameters</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best parameters:"</span>, gscv.best_params_)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best MSE: </span><span class="sc">{</span><span class="op">-</span>gscv<span class="sc">.</span>best_score_<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(<span class="op">-</span>gscv.best_score_)<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best R-Squared: </span><span class="sc">{</span>gscv<span class="sc">.</span>best_score_<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Best parameters: {'preprocessing__rooms__degree': np.int64(1), 'preprocessing__size__degree': np.int64(3)}
-Best MSE: 2798020988.10
-Best RMSE: 52896.32</code></pre>
+Best R-Squared: 0.5576</code></pre>
 </div>
 </div>
-<div id="cell-20" class="cell" data-execution_count="22">
+<div id="cell-20" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show top 10 models</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.DataFrame(gscv.cv_results_)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>top_models <span class="op">=</span> results_df[[<span class="st">"param_preprocessing__size__degree"</span>, </span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"param_preprocessing__rooms__degree"</span>, </span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"mean_test_score"</span>]].copy()</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>top_models[<span class="st">"MSE"</span>] <span class="op">=</span> <span class="op">-</span>top_models[<span class="st">"mean_test_score"</span>]</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>top_models[<span class="st">"RMSE"</span>] <span class="op">=</span> np.sqrt(top_models[<span class="st">"MSE"</span>])</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>top_models.sort_values(<span class="st">"MSE"</span>).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>top_models[<span class="st">"R-Squared"</span>] <span class="op">=</span> top_models[<span class="st">"mean_test_score"</span>]</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>top_models <span class="op">=</span> top_models.drop(<span class="st">"mean_test_score"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>top_models.sort_values(<span class="st">"R-Squared"</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -2241,9 +2239,7 @@ Best RMSE: 52896.32</code></pre>
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">param_preprocessing__size__degree</th>
 <th data-quarto-table-cell-role="th">param_preprocessing__rooms__degree</th>
-<th data-quarto-table-cell-role="th">mean_test_score</th>
-<th data-quarto-table-cell-role="th">MSE</th>
-<th data-quarto-table-cell-role="th">RMSE</th>
+<th data-quarto-table-cell-role="th">R-Squared</th>
 </tr>
 </thead>
 <tbody>
@@ -2251,81 +2247,61 @@ Best RMSE: 52896.32</code></pre>
 <td data-quarto-table-cell-role="th">2</td>
 <td>3</td>
 <td>1</td>
-<td>-2.798021e+09</td>
-<td>2.798021e+09</td>
-<td>52896.323011</td>
+<td>0.557641</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">12</td>
 <td>3</td>
 <td>2</td>
-<td>-2.805308e+09</td>
-<td>2.805308e+09</td>
-<td>52965.154426</td>
+<td>0.556857</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">22</td>
 <td>3</td>
 <td>3</td>
-<td>-2.822697e+09</td>
-<td>2.822697e+09</td>
-<td>53129.064117</td>
+<td>0.554039</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">32</td>
 <td>3</td>
 <td>4</td>
-<td>-2.840668e+09</td>
-<td>2.840668e+09</td>
-<td>53297.913826</td>
+<td>0.550392</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">62</td>
 <td>3</td>
 <td>7</td>
-<td>-2.841414e+09</td>
-<td>2.841414e+09</td>
-<td>53304.915999</td>
+<td>0.550200</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">42</td>
 <td>3</td>
 <td>5</td>
-<td>-2.864656e+09</td>
-<td>2.864656e+09</td>
-<td>53522.482566</td>
+<td>0.546549</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">52</td>
 <td>3</td>
 <td>6</td>
-<td>-2.876530e+09</td>
-<td>2.876530e+09</td>
-<td>53633.295407</td>
+<td>0.544879</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">30</td>
 <td>1</td>
 <td>4</td>
-<td>-2.891811e+09</td>
-<td>2.891811e+09</td>
-<td>53775.564021</td>
+<td>0.541529</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">40</td>
 <td>1</td>
 <td>5</td>
-<td>-2.894181e+09</td>
-<td>2.894181e+09</td>
-<td>53797.591423</td>
+<td>0.541066</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>2</td>
 <td>1</td>
-<td>-2.921754e+09</td>
-<td>2.921754e+09</td>
-<td>54053.252747</td>
+<td>0.537472</td>
 </tr>
 </tbody>
 </table>
@@ -2333,7 +2309,7 @@ Best RMSE: 52896.32</code></pre>
 </div>
 </div>
 </div>
-<p><strong>Q1 Answer:</strong> The best model with lowest RMSE uses the degree 3 for size and degree 1 for rooms, shown above.</p>
+<p><strong>Q1 Answer:</strong> The best model with highest R-squared uses the degree 3 for size and degree 1 for rooms, shown above.</p>
 <p><strong>Q2 Answer: Downsides of trying all possible model options:</strong></p>
 <ol type="1">
 <li>With 10 × 10 = 100 combinations and 5 folds, we fit 500 models total. This takes significant time and resources. Also, testing so many combinations increases the chance of finding a model that performs well on our specific dataset by chance rather than true predictive power. Furthermore, higher degree polynomials may not provide much improvement and can lead to overfitting.</li>

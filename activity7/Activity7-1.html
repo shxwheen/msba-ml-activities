@@ -1309,6 +1309,54 @@ Model 4 RMSE: 56561.14</code></pre>
 </div>
 <p><strong>Answer:</strong> Model 3 the lowest MSE and RMSE, indicating that it performed best.</p>
 </section>
+<section id="exercise-13.3.1-cross-validation-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-13.3.1-cross-validation-comparison">Exercise 13.3.1: Cross-Validation Comparison</h2>
+<p>Use the <code>cross_val_score()</code> function with the pipelines from Exercise 13.2.5 to find the cross-validated RMSE for each model. Which model do you prefer, and does it agree with your conclusion from earlier?</p>
+<div id="cell-13" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform 5-fold cross-validation for each model</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 1: Size and rooms only</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>cv_scores1 <span class="op">=</span> cross_val_score(pipeline1, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>cv_rmse1 <span class="op">=</span> np.sqrt(<span class="op">-</span>cv_scores1.mean())</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 2: Size, rooms, and building type</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>cv_scores2 <span class="op">=</span> cross_val_score(pipeline2, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>cv_rmse2 <span class="op">=</span> np.sqrt(<span class="op">-</span>cv_scores2.mean())</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 3: Size and building type with interaction</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Model 3 uses only specific columns</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>X_model3 <span class="op">=</span> X[[<span class="st">"Gr Liv Area"</span>, <span class="st">"Bldg Type"</span>]]</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>cv_scores3 <span class="op">=</span> cross_val_score(pipeline3, X_model3, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>cv_rmse3 <span class="op">=</span> np.sqrt(<span class="op">-</span>cv_scores3.mean())</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Model 4: 5-degree polynomial on size and rooms, plus building type</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>cv_scores4 <span class="op">=</span> cross_val_score(pipeline4, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>cv_rmse4 <span class="op">=</span> np.sqrt(<span class="op">-</span>cv_scores4.mean())</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare cross-validation results</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>cv_results <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Model"</span>: [<span class="st">"Model 1: Size + Rooms"</span>, </span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Model 2: Size + Rooms + BldgType"</span>, </span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Model 3: Size x BldgType interaction"</span>,</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Model 4: Poly(5) Size + Poly(5) Rooms + BldgType"</span>],</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CV RMSE"</span>: [cv_rmse1, cv_rmse2, cv_rmse3, cv_rmse4],</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Test RMSE"</span>: [rmse1, rmse2, rmse3, rmse4]</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cross-Validation Results:"</span>)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_results.sort_values(<span class="st">"CV RMSE"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cross-Validation Results:
+                                              Model       CV RMSE     Test RMSE
+2              Model 3: Size x BldgType interaction  53583.840600  54889.445504
+1                  Model 2: Size + Rooms + BldgType  54332.255227  55678.731842
+0                             Model 1: Size + Rooms  56001.240238  57684.210696
+3  Model 4: Poly(5) Size + Poly(5) Rooms + BldgType  56368.687251  56561.137728</code></pre>
+</div>
+</div>
+<p><strong>Answer:</strong></p>
+<p>I still prefer model 3, this DOES agree with my prior conclusion as well</p>
+</section>
 <section id="exercise-13.3.2-how-many-model-fitting-steps" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-13.3.2-how-many-model-fitting-steps">Exercise 13.3.2: How Many Model Fitting Steps?</h2>
 <p>Recall that the model fitting step is when coefficients are computed for the linear regression.</p>
@@ -1332,28 +1380,28 @@ Model 4 RMSE: 56561.14</code></pre>
 <p>Hint: The dictionary of possible values that you make to give to GridSearchCV will have two elements instead of one.</p>
 <p>Q1: Which model performed the best?</p>
 <p>Q2: What downsides do you see of trying all possible model options? How might you go about choosing a smaller number of tuning values to try?</p>
-<div id="cell-15" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the column transformer and pipeline</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ct <span class="op">=</span> ColumnTransformer([</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"dummify"</span>, OneHotEncoder(sparse_output<span class="op">=</span><span class="va">False</span>), [<span class="st">"Bldg Type"</span>]),</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"size"</span>, PolynomialFeatures(), [<span class="st">"Gr Liv Area"</span>]),</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"rooms"</span>, PolynomialFeatures(), [<span class="st">"TotRms AbvGrd"</span>])</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>], remainder<span class="op">=</span><span class="st">"drop"</span>)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline([</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"preprocessing"</span>, ct),</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"linear_regression"</span>, LinearRegression())</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define parameter grid with TWO parameters</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"preprocessing__size__degree"</span>: np.arange(<span class="dv">1</span>, <span class="dv">11</span>),</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"preprocessing__rooms__degree"</span>: np.arange(<span class="dv">1</span>, <span class="dv">11</span>)</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Use negative MSE as scoring (GridSearchCV maximizes, so we negate)</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>gscv <span class="op">=</span> GridSearchCV(pipeline, param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"neg_mean_squared_error"</span>)</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>gscv.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-18" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the column transformer and pipeline</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ct <span class="op">=</span> ColumnTransformer([</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"dummify"</span>, OneHotEncoder(sparse_output<span class="op">=</span><span class="va">False</span>), [<span class="st">"Bldg Type"</span>]),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"size"</span>, PolynomialFeatures(), [<span class="st">"Gr Liv Area"</span>]),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"rooms"</span>, PolynomialFeatures(), [<span class="st">"TotRms AbvGrd"</span>])</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>], remainder<span class="op">=</span><span class="st">"drop"</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"preprocessing"</span>, ct),</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"linear_regression"</span>, LinearRegression())</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define parameter grid with TWO parameters</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"preprocessing__size__degree"</span>: np.arange(<span class="dv">1</span>, <span class="dv">11</span>),</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"preprocessing__rooms__degree"</span>: np.arange(<span class="dv">1</span>, <span class="dv">11</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Use negative MSE as scoring (GridSearchCV maximizes, so we negate)</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>gscv <span class="op">=</span> GridSearchCV(pipeline, param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"neg_mean_squared_error"</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>gscv.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <style>#sk-container-id-2 {
   /* Definition of color scheme common for light and dark mode */
@@ -2163,26 +2211,26 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </script>
 </div>
 </div>
-<div id="cell-16" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find best parameters</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best parameters:"</span>, gscv.best_params_)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best MSE: </span><span class="sc">{</span><span class="op">-</span>gscv<span class="sc">.</span>best_score_<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(<span class="op">-</span>gscv.best_score_)<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-19" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find best parameters</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best parameters:"</span>, gscv.best_params_)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best MSE: </span><span class="sc">{</span><span class="op">-</span>gscv<span class="sc">.</span>best_score_<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(<span class="op">-</span>gscv.best_score_)<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Best parameters: {'preprocessing__rooms__degree': np.int64(1), 'preprocessing__size__degree': np.int64(3)}
 Best MSE: 2798020988.10
 Best RMSE: 52896.32</code></pre>
 </div>
 </div>
-<div id="cell-17" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show top 10 models</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.DataFrame(gscv.cv_results_)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>top_models <span class="op">=</span> results_df[[<span class="st">"param_preprocessing__size__degree"</span>, </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"param_preprocessing__rooms__degree"</span>, </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"mean_test_score"</span>]].copy()</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>top_models[<span class="st">"MSE"</span>] <span class="op">=</span> <span class="op">-</span>top_models[<span class="st">"mean_test_score"</span>]</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>top_models[<span class="st">"RMSE"</span>] <span class="op">=</span> np.sqrt(top_models[<span class="st">"MSE"</span>])</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>top_models.sort_values(<span class="st">"MSE"</span>).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-20" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show top 10 models</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.DataFrame(gscv.cv_results_)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>top_models <span class="op">=</span> results_df[[<span class="st">"param_preprocessing__size__degree"</span>, </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"param_preprocessing__rooms__degree"</span>, </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"mean_test_score"</span>]].copy()</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>top_models[<span class="st">"MSE"</span>] <span class="op">=</span> <span class="op">-</span>top_models[<span class="st">"mean_test_score"</span>]</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>top_models[<span class="st">"RMSE"</span>] <span class="op">=</span> np.sqrt(top_models[<span class="st">"MSE"</span>])</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>top_models.sort_values(<span class="st">"MSE"</span>).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 
